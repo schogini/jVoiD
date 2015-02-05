@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+
+	
+	<context:component-scan base-package="com.jvoid.customers" />
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/jvoid" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	
+	<!-- Hibernate 4 SessionFactory Bean definition --> 
+	<bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+			<value>com.jvoid.customers.customer.model.Customer</value>
+			<value>com.jvoid.customers.customer.model.Entities</value>
+			<value>com.jvoid.customers.customer.model.CustomerAddress</value>
+			<value>com.jvoid.customers.customer.model.CustomerAddressAttributeValues</value>
+			<value>com.jvoid.customers.customer.model.CustomerEntityValues</value>
+			<value>com.jvoid.customers.customer.model.CustomerGroup</value>
+			<value>com.jvoid.customers.customer.model.CustomerMaster</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="customerAddressAttributeValuesDAO" class="com.jvoid.customers.customer.dao.impl.CustomerAddressAttributeValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="customerAddressAttributeValuesService" class="com.jvoid.customers.customer.service.impl.CustomerAddressAttributeValuesServiceImpl">
+		<property name="customerAddressAttributeValuesDAO" ref="customerAddressAttributeValuesDAO"></property>
+	</bean>
+	
+	<bean id="customerAddressDAO" class="com.jvoid.customers.customer.dao.impl.CustomerAddressDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="customerAddressService" class="com.jvoid.customers.customer.service.impl.CustomerAddressServiceImpl">
+		<property name="customerAddressDAO" ref="customerAddressDAO"></property>
+	</bean>		
+	
+	<bean id="customerEntityValuesDAO" class="com.jvoid.customers.customer.dao.impl.CustomerEntityValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="customerEntityValuesService" class="com.jvoid.customers.customer.service.impl.CustomerEntityValuesServiceImpl">
+		<property name="customerEntityValuesDAO" ref="customerEntityValuesDAO"></property>
+	</bean>		
+	
+	<bean id="customerGroupDAO" class="com.jvoid.customers.customer.dao.impl.CustomerGroupDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="customerGroupService" class="com.jvoid.customers.customer.service.impl.CustomerGroupServiceImpl">
+		<property name="customerGroupDAO" ref="customerGroupDAO"></property>
+	</bean>		
+	
+	<bean id="customerDAO" class="com.jvoid.customers.customer.dao.impl.CustomerDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="customerService" class="com.jvoid.customers.customer.service.impl.CustomerServiceImpl">
+		<property name="customerDAO" ref="customerDAO"></property>
+	</bean>	
+	
+	<bean id="entitiesDAO" class="com.jvoid.customers.customer.dao.impl.EntitiesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="entitiesService" class="com.jvoid.customers.customer.service.impl.EntitiesServiceImpl"> 
+		<property name="entitiesDAO" ref="entitiesDAO"></property>
+	</bean>		
+	
+	<bean id="customerMasterService" class="com.jvoid.customers.customer.service.CustomerMasterService">
+		<property name="customerService" ref="customerService" />
+		<property name="customerEntityValuesService" ref="customerEntityValuesService" />
+		<property name="entitiesService" ref="entitiesService" />
+		<property name="customerGroupService" ref="customerGroupService" />
+	</bean> 			
+</beans>

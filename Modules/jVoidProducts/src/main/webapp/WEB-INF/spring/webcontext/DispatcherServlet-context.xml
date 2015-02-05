@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+
+	
+	<context:component-scan base-package="com.jvoid.products" />  
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/jvoid" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	
+	<!-- Hibernate 4 SessionFactory Bean definition --> 
+	<bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+			<value>com.jvoid.products.product.model.Product</value>
+			<value>com.jvoid.products.product.model.Entities</value>
+			<value>com.jvoid.products.product.model.Categories</value>
+			<value>com.jvoid.products.product.model.CategoryProducts</value>
+			<value>com.jvoid.products.product.model.CategoryEntityValues</value>
+			<value>com.jvoid.products.product.model.ProductEntityValues</value>
+			<value>com.jvoid.products.product.model.ProductsMaster</value>
+			<value>com.jvoid.products.product.model.Attribute</value>
+			<value>com.jvoid.products.product.model.AttributeGroup</value>
+			<value>com.jvoid.products.product.model.AttributeSet</value>
+			<value>com.jvoid.products.product.model.AttributeValues</value>
+			<value>com.jvoid.products.product.model.ProductAttributeValues</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="productAttributeValuesDAO" class="com.jvoid.products.product.dao.impl.ProductAttributeValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="productAttributeValuesService" class="com.jvoid.products.product.service.impl.ProductAttributeValuesServiceImpl">
+		<property name="productAttributeValuesDAO" ref="productAttributeValuesDAO"></property>
+	</bean>
+	
+	
+	<bean id="attributeDAO" class="com.jvoid.products.product.dao.impl.AttributeDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="attributeService" class="com.jvoid.products.product.service.impl.AttributeServiceImpl">
+		<property name="attributeDAO" ref="attributeDAO"></property>
+	</bean>
+	
+	<bean id="attributeGroupDAO" class="com.jvoid.products.product.dao.impl.AttributeGroupDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="attributeGroupService" class="com.jvoid.products.product.service.impl.AttributeGroupServiceImpl">
+		<property name="attributeGroupDAO" ref="attributeGroupDAO"></property>
+	</bean>
+	
+	<bean id="attributeSetDAO" class="com.jvoid.products.product.dao.impl.AttributeSetDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="attributeSetService" class="com.jvoid.products.product.service.impl.AttributeSetServiceImpl">
+		<property name="attributeSetDAO" ref="attributeSetDAO"></property>
+	</bean>	
+	
+	<bean id="attributeValuesDAO" class="com.jvoid.products.product.dao.impl.AttributeValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="attributeValuesService" class="com.jvoid.products.product.service.impl.AttributeValuesServiceImpl">
+		<property name="attributeValuesDAO" ref="attributeValuesDAO"></property>
+	</bean>
+	
+	<bean id="categoryProductsDAO" class="com.jvoid.products.product.dao.impl.CategoryProductsDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="categoryProductsService" class="com.jvoid.products.product.service.impl.CategoryProductsServiceImpl">
+		<property name="categoryProductsDAO" ref="categoryProductsDAO"></property>
+	</bean>
+	
+	<bean id="productDAO" class="com.jvoid.products.product.dao.impl.ProductDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="productService" class="com.jvoid.products.product.service.impl.ProductServiceImpl">
+		<property name="productDAO" ref="productDAO"></property>
+	</bean>	
+	
+	<bean id="entitiesDAO" class="com.jvoid.products.product.dao.impl.EntitiesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="entitiesService" class="com.jvoid.products.product.service.impl.EntitiesServiceImpl"> 
+		<property name="entitiesDAO" ref="entitiesDAO"></property>
+	</bean>	
+	
+	<bean id="categoriesDAO" class="com.jvoid.products.product.dao.impl.CategoriesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="categoriesService" class="com.jvoid.products.product.service.impl.CategoriesServiceImpl">
+		<property name="categoriesDAO" ref="categoriesDAO"></property>
+	</bean>		
+	
+	<bean id="categoryEntityValuesDAO" class="com.jvoid.products.product.dao.impl.CategoryEntityValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="categoryEntityValuesService" class="com.jvoid.products.product.service.impl.CategoryEntityValuesServiceImpl">
+		<property name="categoryEntityValuesDAO" ref="categoryEntityValuesDAO"></property>
+	</bean>	
+	
+	<bean id="productEntityValuesDAO" class="com.jvoid.products.product.dao.impl.ProductEntityValuesDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<bean id="productEntityValuesService" class="com.jvoid.products.product.service.impl.ProductEntityValuesServiceImpl">
+		<property name="productEntityValuesDAO" ref="productEntityValuesDAO"></property>
+	</bean>	
+	
+	<bean id="categoryProductsMasterService" class="com.jvoid.products.product.service.CategoryProductsMasterService"> 
+		<property name="categoriesService" ref="categoriesService" />
+		<property name="categoryProductsService" ref="categoryProductsService" />
+		<property name="categoryEntityValuesService" ref="categoryEntityValuesService" />
+		<property name="entitiesService" ref="entitiesService" />
+	</bean>	
+	
+	<bean id="ProductsMasterService" class="com.jvoid.products.product.service.ProductsMasterService"> 
+		<property name="productService" ref="productService" />
+		<property name="productEntityValuesService" ref="productEntityValuesService" />
+		<property name="entitiesService" ref="entitiesService" />
+		<property name="categoryProductsService" ref="categoryProductsService" />
+		<property name="attributeService" ref="attributeService"/>
+		<property name="attributeGroupService" ref="attributeGroupService"></property>
+		<property name="attributeSetService" ref="attributeSetService"></property>
+		<property name="attributeValuesService" ref="attributeValuesService"></property>
+		<property name="productAttributeValuesService" ref="productAttributeValuesService"></property>
+		<property name="categoriesService" ref="categoriesService"></property>
+	</bean>		
+</beans>
