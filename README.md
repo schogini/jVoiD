@@ -13,10 +13,6 @@ jVoiD is an open-source extensible ecommerce architecture for the enterprise usi
 > Eclipse IDE or any other Java IDE.
 > Spring 4.0 and above.
 
-## Support
-
-jVoiD offers [commercial support and training](http://www.jvoid.com) which can also include professional services. Community support is offered through the [Broadleaf forums](http://www.jvoid.com) and/or [our GitHub issues](https://github.com/schogini/jVoiD/issues).
-
 ## Key Features and Technologies
 
 ### Java J2EE
