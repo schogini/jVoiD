@@ -9,4 +9,3 @@ test-output
 .metadata
 *.ipr
 bin/
-cmd.txt
