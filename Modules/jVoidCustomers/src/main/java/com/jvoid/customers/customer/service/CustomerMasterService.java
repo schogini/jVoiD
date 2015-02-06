@@ -149,7 +149,7 @@ public class CustomerMasterService {
 	    try {
 	    	 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("rajeev@schogini.com"));
+			message.setFrom(new InternetAddress("toaddress@example.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			message.setSubject("Reset Password");
 			String content = "Your new password is " + password;
