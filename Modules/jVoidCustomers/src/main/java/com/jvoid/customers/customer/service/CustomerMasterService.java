@@ -142,7 +142,7 @@ public class CustomerMasterService {
 	    properties.put("mail.smtp.port", 587);
 	    Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("rajeev@schogini.com", "rajeev@9947313535");
+				return new PasswordAuthentication("test@example.com", "test123");
 			}
 	    });
 	    

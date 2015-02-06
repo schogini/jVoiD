@@ -28,7 +28,6 @@ import org.springframework.stereotype.Repository;
 import com.jvoid.order.dao.CheckoutOrderDAO;
 import com.jvoid.order.model.CheckoutOrder;
 import com.jvoid.persistence.hibernate.GenericHibernateDAO;
-import com.jvoid.quote.model.CheckoutQuoteItem;
 
 @Repository
 public class CheckoutOrderDAOImpl extends GenericHibernateDAO<CheckoutOrder, Integer> implements CheckoutOrderDAO {

@@ -1,4 +1,4 @@
-README.txtpackage com.jvoid.customers.customer.service.impl;
+package com.jvoid.customers.customer.service.impl;
 
 import java.util.List;
 
