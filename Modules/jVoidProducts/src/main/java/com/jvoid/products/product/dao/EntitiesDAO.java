@@ -2,7 +2,8 @@
  * #%L
  * jVoiD Open Platform
  * %%
- * Copyright (C) 2014 - 2015 jVoiD
+ * Copyright 2014-2015 Schogini Systems Pvt Ltd (http://www.schogini.com)
+ * Project Website: http://www.jvoid.com
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
