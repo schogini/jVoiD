@@ -1,6 +1,6 @@
 # jVoiD
 
-## Introduction
+## Introduction 
 
 jVoiD is an open-source extensible ecommerce architecture for the enterprise using J2EE, Spring MVC, Spring Security with OAUTH2, Hibernate, Bootstrap/AngularUI, AngularJS that can run in TomCat or JBoss Servers.
 
