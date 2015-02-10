@@ -88,7 +88,6 @@ public class JVoidCustomerController {
 			customerMaster = this.customerMasterService.getCustomerByEmail(email);
 			System.out.println(customerMaster.toString());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -97,13 +96,10 @@ public class JVoidCustomerController {
 			try {
 				json = ow.writeValueAsString(customerMaster);
 			} catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
