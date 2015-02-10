@@ -27,6 +27,11 @@ package com.jvoid.core.controller;
  * @version 1.0
  */
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -50,14 +55,14 @@ import com.jvoid.core.uricostants.URIConstants;
 @Controller
 public class HomeController {   	
 	public ArrayList<ProductsMaster> listOfProducts;
-	
+	private final String USER_AGENT = "Mozilla/5.0";
 	@RequestMapping("/")
 	public @ResponseBody String welcome() {
 		return "Welcome to jvoid core";
 	}
 	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String loginToJvoid(@RequestParam(required = false, value = "params") JSONObject jsonParams) {
 		System.out.println("Login:jsonParams=>"+jsonParams.toString());
 		
@@ -69,6 +74,121 @@ public class HomeController {
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		HttpEntity<String> returnString = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity, String.class);
 		return returnString.getBody();
+	}*/
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public @ResponseBody String loginToJvoid(@RequestParam(required = false, value = "callback") String callback, @RequestParam(required = false, value = "params") JSONObject jsonParams) {
+		
+		String clientid = "restapp";
+		String clientsecret = "restapp";
+		String username = null;
+		String password = null;
+		
+		try {
+			//clientid = jsonParams.getString("client_id");
+			//clientsecret = jsonParams.getString("client_secret");
+			username = jsonParams.getString("email");
+			password = jsonParams.getString("password");
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		}
+		
+		
+		ArrayList<String> params = new ArrayList<String>();
+		params.add("callback="+callback);
+		params.add("client_id="+clientid);
+		params.add("client_secret="+clientsecret);
+		params.add("username="+username);
+		params.add("password="+password);
+		
+		String url = "http://localhost:9080/jvoidcore/oauth/token?grant_type=password&client_id="+clientid+"&client_secret="+clientsecret+"&username="+username+"&password="+password;
+		JSONObject jsonerr = new JSONObject();		
+		try {
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("User-Agent", USER_AGENT);
+	 
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+	 
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			System.out.println("Response : " + response);
+			
+			// Access Token Response from JBOSS
+			// {"value":"f8ecf6f5-6c82-457d-9b1c-a9c24839ceb9","expiration":1418396633807,"tokenType":"bearer","refreshToken":{"value":"d5812c57-c8d7-49df-a482-510678457caa","expiration":1420988390872},"scope":[],"additionalInformation":{},"expired":false,"expiresIn":90}
+			// Access Token Response from TomCat
+			// {"access_token":"c9ee8e87-cffc-4c43-82b2-0a71e47393f2","token_type":"bearer","refresh_token":"9409069d-d4f4-4e04-9843-b679b54b8fbd","expires_in":119}
+			JSONObject responseJsonObj = new JSONObject();
+			try {
+				JSONObject jsonObj = new JSONObject(response.toString());
+				if (jsonObj.has("access_token")) {
+					// TomCat Response. Do Nothing
+					responseJsonObj.put("status", 0);
+					responseJsonObj.put("details", jsonObj);
+					
+				} else {
+					// JBOSS Response
+					JSONObject refreshTokenObj = new JSONObject(jsonObj.getString("refreshToken"));
+					JSONObject newJsonObj = new JSONObject();
+					newJsonObj.put("access_token", jsonObj.getString("value"));
+					newJsonObj.put("token_type", jsonObj.getString("tokenType"));
+					newJsonObj.put("refresh_token", refreshTokenObj.getString("value"));
+					if (jsonObj.has("expiresIn")) {
+						newJsonObj.put("expires_in", jsonObj.getString("expiresIn"));
+					} else {
+						newJsonObj.put("expires_in", "-1");
+					}
+					
+					responseJsonObj.put("status", 0);
+					responseJsonObj.put("details", newJsonObj);
+				}
+				
+				String returnjson = "";
+				if (null == callback) {
+					returnjson = responseJsonObj.toString(); ;
+				} else {
+					returnjson = callback + "(" + responseJsonObj.toString() + ")";					
+				}
+				
+				return returnjson;
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+				try {
+					jsonerr.put("status", 0);
+					jsonerr.put("message", "JSONException: Invalid credentials");
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		} catch(IOException e) {
+			System.out.println("Error!" + e.getMessage());
+			try {
+				jsonerr.put("status", 0);
+				jsonerr.put("message", "JSONException: Invalid credentials");
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		String jsonerrString = "";
+		if (null == callback) {
+			jsonerrString = jsonerr.toString();
+		} else {
+			jsonerrString = callback + "(" + jsonerr.toString() + ")";				
+		}
+		
+		return jsonerrString;
 	}
 	
 	@RequestMapping("/login-tester")
