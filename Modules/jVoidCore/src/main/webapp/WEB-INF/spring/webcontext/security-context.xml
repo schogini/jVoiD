@@ -41,7 +41,7 @@
 		access-decision-manager-ref="accessDecisionManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<security:anonymous enabled="false" />
-		<security:intercept-url pattern="/customer/**" access="ROLE_CUSTOMER" />
+		<security:intercept-url pattern="/customer1/**" access="ROLE_CUSTOMER" />
 		<security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 	</security:http>
 	

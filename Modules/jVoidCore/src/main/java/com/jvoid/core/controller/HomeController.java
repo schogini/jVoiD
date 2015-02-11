@@ -27,11 +27,6 @@ package com.jvoid.core.controller;
  * @version 1.0
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -62,7 +57,7 @@ public class HomeController {
 	}
 	
 	
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String loginToJvoid(@RequestParam(required = false, value = "params") JSONObject jsonParams) {
 		System.out.println("Login:jsonParams=>"+jsonParams.toString());
 		
@@ -74,9 +69,9 @@ public class HomeController {
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		HttpEntity<String> returnString = restTemplate.exchange(builder.build().toUri(), HttpMethod.GET, entity, String.class);
 		return returnString.getBody();
-	}*/
+	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String loginToJvoid(@RequestParam(required = false, value = "callback") String callback, @RequestParam(required = false, value = "params") JSONObject jsonParams) {
 		
 		String clientid = "restapp";
@@ -189,7 +184,7 @@ public class HomeController {
 		}
 		
 		return jsonerrString;
-	}
+	}*/
 	
 	@RequestMapping("/login-tester")
 	public @ResponseBody String jvoidLoginTester(@RequestParam("params") String jsonParams) {
@@ -202,7 +197,7 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("jsonObj=>"+jsonObj);
+		System.out.println("Login-tester:jsonObj=>"+jsonObj);
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
