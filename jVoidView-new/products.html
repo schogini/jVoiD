@@ -1,0 +1,35 @@
+<!--
+ * jVoiDView products
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+ 
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div class="row">
+	<div class="col-sm-6 col-md-3" style="padding-bottom: 15px" ng-repeat="product in products">
+		<div class="thumbnail" style="height:500px;">
+			<img ng-src="image/p{{product.id}}.jpg" alt="image"  style="height:200px;"/>
+			<div class="caption">
+				<h3>{{product.name  | limitTo :16}}</h3>
+				<p>{{product.shortDescription | limitTo :150}}</p>
+				<p>{{product.price}} USD</p>
+				<p>Available {{product.stock}} units in stock</p>
+				<p>
+					<a href="#product/{{$index}}" class="btn btn-primary" style="left:100%; top:100%"> 
+					<span class="glyphicon glyphicon-info-sign" /></span> Details
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

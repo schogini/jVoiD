@@ -1,0 +1,241 @@
+<!--
+ * jVoiDView checkout
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+ 
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div>
+	<form name="signup_form" novalidate ng-submit="submit()">
+		<fieldset>
+			<legend>Personal Details</legend>
+			<span class="rightNotes">*Required Fields</span>
+			<div class="row">
+				<div class="large-12 columns">
+					<label>First Name<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="First Name" name="firstName" size="40" ng-model="user.firstName" ng-minlength=3 ng-maxlength=20 required/>
+		    		<span style="color:red" ng-show="signup_form.firstName.$dirty && signup_form.firstName.$invalid">
+						<span ng-show="signup_form.firstName.$error.required">First Name is required</span>
+						<span ng-show="signup_form.firstName.$error.minlength">Your name is required to be at least 3 characters</span>
+						<span ng-show="signup_form.firstName.$error.maxlength">Your name cannot be longer than 20 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Last Name<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Last Name" name="lastName" size="40" ng-model="user.lastName" ng-minlength=1 ng-maxlength=20 required/>
+		    		<span style="color:red" ng-show="signup_form.lastName.$dirty && signup_form.lastName.$invalid">
+						<span ng-show="signup_form.lastName.$error.required">Last Name is required</span>
+						<span ng-show="signup_form.lastName.$error.minlength">Last Name is required to be at least 1 characters</span>
+						<span ng-show="signup_form.lastName.$error.maxlength">Last Name cannot be longer than 20 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Company:</label>
+		    		<input type="text" placeholder="Company" name="company" size="40" ng-model="user.company"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Email Address<span style="color:red">*</span>:</label>
+		    		<input type="email" placeholder="test@test.com" name="email" size="40" ng-model="user.email" required/>
+		    		<span style="color:red" ng-show="signup_form.email.$dirty && signup_form.email.$invalid">
+						<span ng-show="signup_form.email.$error.required">Email Address is required</span>
+						<span ng-show="signup_form.email.$error.email">Invalid email address</span>
+					</span>
+		    	</div>
+		    </div><br><br>
+		    
+		    <legend>Billing Address</legend>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Address<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Address" name="address" size="40" ng-model="billing.address" ng-minlength=3 required/>
+		    		<span style="color:red" ng-show="signup_form.address.$dirty && signup_form.address.$invalid">
+						<span ng-show="signup_form.address.$error.required">Address is required</span>
+						<span ng-show="signup_form.address.$error.minlength">Address is required to be at least 3 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Street Address 2:</label>
+		    		<input type="text" placeholder="Street" name="address2" size="40" ng-model="billing.address2"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>City<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="City" name="city" size="40" ng-model="billing.city" required/>
+		    		<span style="color:red" ng-show="signup_form.city.$dirty && signup_form.city.$invalid">
+						<span ng-show="signup_form.city.$error.required">City is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Country<span style="color:red">*</span>:</label>
+		    		<select name="bcountry" ng-model="billing.country" ng-options="country as country.name for country in countries" ng-change='onBDropDownAction()'>
+				    	<option value="">==Select Country==</option>
+				    </select>
+				    <span style="color:red" ng-show="bCountryNotSelected">
+						<span ng-show="bCountryNotSelected">Country is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label ng-show="isBStates">State/Province<span style="color:red">*</span>:</label>
+				    <select name="bstate" ng-model="billing.state" ng-options="state as state.name for state in states" ng-change='onBStateDropDownAction()' ng-show="isBStates">
+				    	<option value="">==Select State/Province==</option>
+				    </select>
+				    <span style="color:red" ng-show="isBStates">
+						<span ng-show="bStateNotSelected">State/Province is required</span>
+					</span>
+		    	</div>
+		    </div><br ng-show="isBStates">
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Zip<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="123456" name="zip" size="40" ng-model="billing.zip" ng-pattern="onlyNumbers" required/>
+		    		<span style="color:red" ng-show="signup_form.zip.$dirty && signup_form.zip.$invalid">
+						<span ng-show="signup_form.zip.$error.required">Zip is required</span>
+						<span ng-show="signup_form.zip.$error.pattern">Zip is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Telephone<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="1234567890" name="phone" size="40" ng-model="billing.phone" ng-pattern="onlyNumbers" required/>
+		    		<span style="color:red" ng-show="signup_form.phone.$dirty && signup_form.phone.$invalid">
+						<span ng-show="signup_form.phone.$error.required">Telephone is required</span>
+						<span ng-show="signup_form.phone.$error.pattern">Telephone is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Fax:</label>
+		    		<input type="text" placeholder="1234567890" name="fax" size="40" ng-model="billing.fax"/>
+		    	</div>
+		    </div>
+		    <br><br>
+		    
+		    <legend>Shipping Address</legend>
+		    <div class="row">
+				<div class="large-12 columns">
+		    		Same as Billing Address <input type="checkbox" ng-change='onCHeckBoxAction(address)' ng-model="address.checked">
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Address<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Address" name="saddress" size="40" ng-model="shipping.address" ng-minlength=3 ng-disabled="address.checked" required/>
+		    		<span style="color:red" ng-show="signup_form.saddress.$dirty && signup_form.saddress.$invalid">
+						<span ng-show="signup_form.saddress.$error.required">Address is required</span>
+						<span ng-show="signup_form.saddress.$error.minlength">Address is required to be at least 3 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Street Address 2:</label>
+		    		<input type="text" placeholder="Street" name="saddress2" size="40" ng-model="shipping.address2" ng-disabled="address.checked"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>City<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="City" name="scity" size="40" ng-model="shipping.city" ng-disabled="address.checked" required/>
+		    		<span style="color:red" ng-show="signup_form.scity.$dirty && signup_form.scity.$invalid">
+						<span ng-show="signup_form.scity.$error.required">City is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Country<span style="color:red">*</span>:</label>
+		    		<select name="scountry" ng-model="shipping.country" ng-options="country as country.name for country in countries" ng-change='onSDropDownAction()' ng-disabled="address.checked">
+				    	<option value="">==Select Country==</option>
+				    </select>
+				    <span style="color:red" ng-show="sCountryNotSelected">
+						<span ng-show="sCountryNotSelected">Country is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label ng-show="isSStates">State/Province<span style="color:red">*</span>:</label>
+				    <select name="sstate" ng-model="shipping.state" ng-options="state as state.name for state in states" ng-change='onSStateDropDownAction()' ng-show="isSStates" ng-disabled="address.checked">
+				    	<option value="">==Select State/Province==</option>
+				    </select>
+				    <span style="color:red" ng-show="isSStates">
+						<span ng-show="sStateNotSelected">State/Province is required</span>
+					</span>
+		    	</div>
+		    </div><br ng-show="isSStates">
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Zip<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="123456" name="szip" size="40" ng-model="shipping.zip" ng-pattern="onlyNumbers" ng-disabled="address.checked" required/>
+		    		<span style="color:red" ng-show="signup_form.szip.$dirty && signup_form.szip.$invalid">
+						<span ng-show="signup_form.szip.$error.required">Zip is required</span>
+						<span ng-show="signup_form.szip.$error.pattern">Zip is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Telephone<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="1234567890" name="sphone" size="40" ng-model="shipping.phone" ng-pattern="onlyNumbers" ng-disabled="address.checked" required/>
+		    		<span style="color:red" ng-show="signup_form.sphone.$dirty && signup_form.sphone.$invalid">
+						<span ng-show="signup_form.sphone.$error.required">Telephone is required</span>
+						<span ng-show="signup_form.sphone.$error.pattern">Telephone is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Fax:</label>
+		    		<input type="text" placeholder="1234567890" name="sfax" size="40" ng-model="shipping.fax" ng-disabled="address.checked"/>
+		    	</div>
+		    </div>
+		    <br><br>
+		    
+		    <legend>Select Payment Method</legend>
+		    <div class="row">
+				<div class="large-12 columns">
+					<input type="radio" ng-model="payment" value="COD">  Cash On Delivery <br/>
+  					<input type="radio" ng-model="payment" value="DC"> Debit Card <br/>
+  					<input type="radio" ng-model="payment" value="CC"> Credit Card <br/>
+  					<input type="radio" ng-model="payment" value="NB"> Net Banking <br/>
+		    	</div>
+		    </div>
+		    <br><br>
+		    
+		    <legend>Your comments</legend>
+		    <div class="row">
+				<div class="large-12 columns">
+					<textarea ng-model="comment" placeholder="Your Comment" style='width:550px'></textarea>
+		    	</div>
+		    </div>
+		    <br><br>
+		    
+		    <button type="submit" class="button radius" ng-disabled="signup_form.firstName.$invalid || signup_form.lastName.$invalid || signup_form.email.$invalid || signup_form.address.$invalid || signup_form.city.$invalid || signup_form.zip.$invalid || signup_form.phone.$invalid || signup_form.saddress.$invalid || signup_form.scity.$invalid || signup_form.szip.$invalid || signup_form.sphone.$invalid || sStateNotSelected || bStateNotSelected || bCountryNotSelected || sCountryNotSelected">Checkout Cart</button>
+	    </fieldset>
+  	</form>
+</div>

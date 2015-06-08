@@ -1,0 +1,51 @@
+<!--
+ * jVoiDView product
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div class="row">
+	<div class="col-md-5">
+		<img ng-src="image/p{{product.id}}.jpg" alt="image"  style = "width:100%"/>
+	</div>
+
+	<div class="col-md-5">
+		<h3>{{product.name}}</h3>
+		<p>{{product.description}}</p>
+		<p>
+			<strong>Item Code : </strong><span class="label label-warning">{{product.sku}}</span>
+		</p>
+		<p>
+			<strong>manufacturer</strong> : {{product.country}}
+		</p>
+		<p>
+			<strong>Condition</strong> : {{product.status}}
+		</p>
+		<p>
+			<strong>Availble units in stock </strong> : {{product.stock}}
+		</p>
+		<h4>{{product.price}} USD</h4>
+		<p>
+			<a ng-click="orderNow()" class="btn btn-warning btn-large"> 
+				<span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
+			<a href="#cart" class="btn btn-default">
+				<span class="glyphicon-hand-right glyphicon"></span> View Cart
+			</a> 
+			<a href="#products" class="btn btn-default">
+				<span class="glyphicon-hand-left glyphicon"></span> back
+			</a>
+		</p>
+
+	</div>
+</div>

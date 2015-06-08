@@ -1,0 +1,33 @@
+<!--
+ * jVoiDView category
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+ 
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div class="row">
+	<div class="col-sm-6 col-md-3" style="padding-bottom: 15px" ng-repeat="category in categories">
+		<div class="thumbnail">
+			<img src="image/C1234.jpg" alt="image"  style = "width:100%"/>
+			<div class="caption">
+				<h3>{{category.categoryName}}</h3>
+				<p>Dummy Description</p>
+				<p>
+					<a href="#category/{{category.id}}/{{category.categoryName}}" class="btn btn-primary"> 
+					<span class="glyphicon glyphicon-info-sign" /></span> Browse Products
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

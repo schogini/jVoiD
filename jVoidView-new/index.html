@@ -1,0 +1,98 @@
+<!--
+ * jVoiDView index
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+ 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVoiD</title>
+
+    <!--link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.1/angular.min.js"></script>
+  	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.1/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script-->
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+  	<script src="lib/jquery.min.js"></script>
+  	<script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-sanitize.js"></script>
+    <script src="lib/angular-route.min.js"></script>
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="application/javascript" src="js/controller.js"></script>
+    
+  </head>
+  
+  <body ng-app="jvoid">
+  	<div class="container">
+		<div class="col-md-12">
+			<h3 class="text-muted">JVoiD</h3>
+			<div ng-controller="navigationController">
+				<ul class="nav nav-tabs pull-left">
+					<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+					<li><a href="#cart" data-toggle="tab">Cart</a></li>
+					<li class="dropdown-mainmenu">
+						<a href="#categories" data-toggle="tab">Categories<span class="caret"></span></a>
+			    		<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" ng-bind-html="htmlString"></ul>
+					</li>
+					<li ng-hide="logined"><a href="#login" ng-click="signInButton()" data-toggle="tab">Sign Up/Login</a></li>
+					<li ng-show="logined" class="dropdown-mainmenu">
+						<a href="#account" ng-click="accountAction()" data-toggle="tab">{{user.firstName}}<span class="caret"></span></a>
+						<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+							<li><a href="#signup">My Account</a></li>
+							<li><a ng-click="logoutAction()" href="#home">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+				
+				<modal title="jVoiD Login" visible="showModal">
+				    <form role="form">
+						<div class="form-group">
+							<label for="email">Email address</label>
+							<input type="email" class="form-control" id="email" placeholder="Enter email" />
+						</div>
+						<div class="form-group">
+						  	<label for="password">Password</label>
+						  	<input type="password" class="form-control" id="password" placeholder="Password" />
+						</div>
+						<div class="form-group">
+						  	<a ng-click="forgetPassWordAction()">Forget password?</a>
+						</div>
+						<button type="submit" class="btn btn-default" ng-click="submitAction()">Submit</button>
+						<button type="submit" class="btn btn-default pull-right" ng-click="signupAction()">Sign Up</button>
+				    </form>
+				</modal>
+				
+				<modal title="Reset password" visible="showModalpass">
+				    <form role="form">
+						<div class="form-group">
+							<label for="email">Email address</label>
+							<input type="email" class="form-control" id="emailpass" placeholder="Enter email" />
+						</div>
+		
+						<button type="submit" class="btn btn-default" ng-click="submitEmailAction()">Submit</button>
+				    </form>
+				</modal>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+		  	<div ng-view></div>
+		</div>
+		
+		<div class="footer pull-right">
+			<p>&copy; Schogini 2014</p>
+		</div>
+	</div>
+    
+  </body>	
+</html>

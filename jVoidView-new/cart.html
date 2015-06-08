@@ -1,0 +1,57 @@
+<!--
+ * jVoiDView cart
+ * 
+ * @author Shajir <shajir@schogini.com>
+ * @version 1.0
+ *
+ -->
+
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div>
+	<div>
+		<a class="btn btn-danger pull-left" ng-click="clearCart()" ng-disabled="emptyCart"> 
+			<span class="glyphicon glyphicon-remove-sign"></span> Clear Cart
+		</a> 
+		<a class="btn btn-success pull-right" ng-click="checkoutCart()" ng-disabled="emptyCart"> 
+			<span class="glyphicon-shopping-cart glyphicon"></span> Check out
+		</a>
+	</div>
+	</br>
+	<table class="table table-hover">
+		<tr>
+			<th>Product</th>
+			<th>Unit price</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Action</th>
+		</tr>
+		<tr ng-repeat="item in items">
+			<td>{{item.name}}</td>
+			<td>{{item.basePrice}}</td>
+			<td>{{item.quantity}}</td>
+			<td>{{item.baseRowTotal}}</td>
+			<td><a class="label label-danger" ng-click="removeFromCart(item.productId)"> 
+				<span class="glyphicon glyphicon-remove" /></span> Remove
+			</a></td>
+		</tr>
+		<tr>
+			<th></th>
+			<th></th>
+			<th>Grand Total</th>
+			<th>{{total}}</th>
+			<th></th>
+		</tr>
+	</table>
+	
+	<a href="#home" class="btn btn-default">
+		<span class="glyphicon-hand-left glyphicon"></span> Continue shopping
+	</a>
+</div>

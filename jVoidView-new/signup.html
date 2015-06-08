@@ -1,0 +1,201 @@
+<!--
+ * jVoiDView signup
+ * 
+ * @author Shajir
+ * @version 1.0
+ *
+ -->
+ 
+<div class="jumbotron">
+	<h1>
+		{{title}}
+	</h1>
+	<p>
+		{{detTitle}}
+	</p>
+</div>
+
+<div>
+	<form name="signup_form" novalidate ng-submit="submit()">
+		<fieldset>
+			<legend>Sign Up</legend>
+			<span class="rightNotes">*Required Fields</span>
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Prefix:</label>
+		    		<input type="text" placeholder="Mr" name="prefix" size="40" ng-model="user.prefix"/>
+		    	</div>
+		    </div><br>
+			<div class="row">
+				<div class="large-12 columns">
+					<label>First Name<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="First Name" name="firstName" size="40" ng-model="user.firstName" ng-minlength=3 ng-maxlength=20 required/>
+		    		<span style="color:red" ng-show="signup_form.firstName.$dirty && signup_form.firstName.$invalid">
+						<span ng-show="signup_form.firstName.$error.required">First Name is required</span>
+						<span ng-show="signup_form.firstName.$error.minlength">Your name is required to be at least 3 characters</span>
+						<span ng-show="signup_form.firstName.$error.maxlength">Your name cannot be longer than 20 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Middle Name:</label>
+		    		<input type="text" placeholder="Middle Name" name="middleName" size="40" ng-model="user.middleName"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Last Name<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Last Name" name="lastName" size="40" ng-model="user.lastName" ng-minlength=1 ng-maxlength=20 required/>
+		    		<span style="color:red" ng-show="signup_form.lastName.$dirty && signup_form.lastName.$invalid">
+						<span ng-show="signup_form.lastName.$error.required">Last Name is required</span>
+						<span ng-show="signup_form.lastName.$error.minlength">Last Name is required to be at least 1 characters</span>
+						<span ng-show="signup_form.lastName.$error.maxlength">Last Name cannot be longer than 20 characters</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Email Address<span style="color:red">*</span>:</label>
+		    		<input type="email" placeholder="test@test.com" name="email" size="40" ng-model="user.email" required/>
+		    		<span style="color:red" ng-show="signup_form.email.$dirty && signup_form.email.$invalid">
+						<span ng-show="signup_form.email.$error.required">Email Address is required</span>
+						<span ng-show="signup_form.email.$error.email">Invalid email address</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Date of Birth<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="dd-MM-yyyy" name="dob" size="40" ng-model="user.dateOfBirth" date-parser="shortDate" ng-pattern="/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19\d)|([2-9]\d{3})$/" required/>
+		    		<span style="color:red" ng-show="signup_form.dob.$dirty && signup_form.dob.$invalid">
+						<span ng-show="signup_form.dob.$error.required">Date of Birth is required</span>
+						<span ng-show="signup_form.dob.$error.pattern">Invalid DOB</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Type Of Customer<span style="color:red">*</span>:</label>
+		    		<input type="radio" ng-model="user.customerGroup" value=1 /> Wholesaler &nbsp&nbsp&nbsp&nbsp&nbsp
+		    		<input type="radio" ng-model="user.customerGroup" value=2 />  Retailer &nbsp&nbsp&nbsp&nbsp&nbsp
+		    		<input type="radio" ng-model="user.customerGroup" value=3 />  Buyer
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Tax Number<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="TAX1234" name="tax" size="40" ng-model="user.taxNumber" required/>
+		    		<span style="color:red" ng-show="signup_form.tax.$dirty && signup_form.tax.$invalid">
+						<span ng-show="signup_form.tax.$error.required">Tax Number is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Gender<span style="color:red">*</span>:</label>
+		    		<input type="radio" ng-model="user.gender" value="male" /> Male &nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" ng-model="user.gender" value="female" />  Female
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Password<span style="color:red">*</span>:</label>
+		    		<input type="password" placeholder="********" name="pass" size="40" ng-model="user.password" ng-minlength=5 required/>
+		    		<span style="color:red" ng-show="signup_form.pass.$dirty && signup_form.pass.$invalid">
+						<span ng-show="signup_form.pass.$error.required">Password is required</span>
+						<span ng-show="signup_form.pass.$error.minlength">Password is required to be atleast 5 charecters </span>
+					</span>
+		    	</div>
+		    	</div><br>
+		    	<div class="row">
+				<div class="large-12 columns">
+					<label>Company:</label>
+		    		<input type="text" placeholder="Company Name" name="company" size="40" ng-model="user.company"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Street Address1<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Address1" name="address1" size="40" ng-model="user.streetAddress1" required/>
+		    		<span style="color:red" ng-show="signup_form.address1.$dirty && signup_form.address1.$invalid">
+						<span ng-show="signup_form.address1.$error.required">Street address1 is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Street Address2<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="Address2" name="address2" size="40" ng-model="user.streetAddress2" required/>
+		    		<span style="color:red" ng-show="signup_form.address2.$dirty && signup_form.address2.$invalid">
+						<span ng-show="signup_form.address2.$error.required">Street address2 is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Street Address3:</label>
+		    		<input type="text" placeholder="Address3" name="address3" size="40" ng-model="user.streetAddress3"/>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>City<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="City" name="city" size="40" ng-model="user.city" required/>
+		    		<span style="color:red" ng-show="signup_form.city.$dirty && signup_form.city.$invalid">
+						<span ng-show="signup_form.city.$error.required">City is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Country<span style="color:red">*</span>:</label>
+		    		<select name="country" ng-model="user.country" ng-options="country as country.name for country in countries track by country.code" ng-change='onSDropDownAction()' ng-disabled="address.checked">
+				    	<option value="">==Select Country==</option>
+				    </select>
+				    <span style="color:red" ng-show="countryNotSelected">
+						<span ng-show="countryNotSelected">Country is required</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label ng-show="isSStates">State/Province<span style="color:red">*</span>:</label>
+				    <select name="sstate" ng-model="user.state" ng-options="state as state.name for state in states track by state.code" ng-change='onSStateDropDownAction()' ng-show="isSStates" ng-disabled="address.checked">
+				    	<option value="">==Select State/Province==</option>
+				    </select>
+				    <span style="color:red" ng-show="isSStates">
+						<span ng-show="stateNotSelected">State/Province is required</span>
+					</span>
+		    	</div>
+		    </div><br ng-show="isSStates">
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Postal Code<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="1234567890" name="pcode" size="40" ng-model="user.postalCode" ng-pattern="onlyNumbers" required/>
+		    		<span style="color:red" ng-show="signup_form.pcode.$dirty && signup_form.pcode.$invalid">
+						<span ng-show="signup_form.pcode.$error.required">Postal Code is required</span>
+						<span ng-show="signup_form.pcode.$error.pattern">Postal Code is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Telephone<span style="color:red">*</span>:</label>
+		    		<input type="text" placeholder="1234567890" name="sphone" size="40" ng-model="user.phone" ng-pattern="onlyNumbers" required/>
+		    		<span style="color:red" ng-show="signup_form.sphone.$dirty && signup_form.sphone.$invalid">
+						<span ng-show="signup_form.sphone.$error.required">Telephone is required</span>
+						<span ng-show="signup_form.sphone.$error.pattern">Telephone is required to be numbers only</span>
+					</span>
+		    	</div>
+		    </div><br>
+		    <div class="row">
+				<div class="large-12 columns">
+					<label>Fax:</label>
+		    		<input type="text" placeholder="1234567890" name="fax" size="40" ng-model="user.fax"/>
+		    	</div>
+		    </div>
+		    <br><br>
+		    <button type="submit" class="button radius" ng-disabled="signup_form.firstName.$invalid || signup_form.lastName.$invalid || signup_form.email.$invalid || signup_form.dob.$invalid || signup_form.address1.$invalid || signup_form.address2.$invalid || signup_form.city.$invalid || signup_form.sphone.$invalid || signup_form.pcode.$invalid || signup_form.pass.$invalid || stateNotSelected || countryNotSelected">Submit</button>
+		<fieldset>
+	</form>
+</div>
